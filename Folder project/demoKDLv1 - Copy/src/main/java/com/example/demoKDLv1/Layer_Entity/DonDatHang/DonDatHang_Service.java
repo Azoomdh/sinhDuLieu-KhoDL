@@ -1,4 +1,4 @@
-package com.example.demoKDLv1.Layer_Entity.DonDatHang.DonDatHang_Service;
+package com.example.demoKDLv1.Layer_Entity.DonDatHang;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,20 +8,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demoKDLv1.Layer_Entity.DonDatHang.DonDatHang_Entity.DonDatHang;
-import com.example.demoKDLv1.Layer_Entity.DonDatHang.DonDatHang_Repo.DonDatHang_RepoCustom.DonDatHang_RepoCustom;
-import com.example.demoKDLv1.Layer_Entity.DonDatHang.DonDatHang_Repo.DonDatHang_RepoJpa.DonDatHang_Repo;
 
+@Transactional
 @Service
 public class DonDatHang_Service {
     @Autowired
-    DonDatHang_Repo ddh_Repo;
+    private DonDatHang_Repo ddh_Repo;
 
     @Autowired
-    DonDatHang_RepoCustom ddh_RepoCustom;
+    private DonDatHang_RepoEMJ ddh_RepoEMJ;
     
-    public DonDatHang getCuahangById(Long id){
+    public DonDatHang getDonDathangById(Long id){
         Optional<DonDatHang> optionalDondathang1= this.ddh_Repo.findById(id);
 
         if(optionalDondathang1.isPresent()== false){
@@ -33,7 +32,7 @@ public class DonDatHang_Service {
 
     public DonDatHang updateDondathangById(Long id, DonDatHang ddh2){
 
-        DonDatHang ddh1= this.getCuahangById(id);
+        DonDatHang ddh1= this.getDonDathangById(id);
 
         if(ddh1== null){
             return null;
@@ -41,7 +40,7 @@ public class DonDatHang_Service {
 
         ddh1.updateNotId(ddh2);
 
-        ddh1= this.ddh_Repo.save(ddh1);
+        ddh1= this.ddh_Repo.saveAndFlush(ddh1);
 
         return ddh1;
     }
@@ -49,7 +48,7 @@ public class DonDatHang_Service {
     public DonDatHang createDondathang(DonDatHang ddh2){
         ddh2.setMadon(null);
 
-        ddh2= this.ddh_Repo.save(ddh2);
+        ddh2= this.ddh_Repo.saveAndFlush(ddh2);
 
         return ddh2;
     }
@@ -59,14 +58,14 @@ public class DonDatHang_Service {
             ddh.setMadon(null);
         }
 
-        listDdh2 = this.ddh_Repo.saveAll(listDdh2);
+        listDdh2 = this.ddh_Repo.saveAllAndFlush(listDdh2);
 
         return listDdh2;
     }
 
     public Boolean deleteDondathangById(Long id){
 
-        DonDatHang ddh1= this.getCuahangById(id);
+        DonDatHang ddh1= this.getDonDathangById(id);
 
         if(ddh1== null){
             return false;

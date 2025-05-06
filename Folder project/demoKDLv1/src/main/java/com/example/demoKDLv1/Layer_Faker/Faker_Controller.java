@@ -48,4 +48,5 @@ public class Faker_Controller {
 
         return "redirect:/Faker";
     }
+
 }

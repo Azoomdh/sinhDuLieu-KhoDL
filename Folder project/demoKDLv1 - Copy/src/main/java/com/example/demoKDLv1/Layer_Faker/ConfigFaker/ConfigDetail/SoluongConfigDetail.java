@@ -1,4 +1,4 @@
-package com.example.demoKDLv1.DTO;
+package com.example.demoKDLv1.Layer_Faker.ConfigFaker.ConfigDetail;
 
 import com.example.demoKDLv1.ZZZ_Util.Faker_Util;
 
@@ -11,6 +11,10 @@ public class SoluongConfigDetail {
 
     public Integer getGiaTri(){
         return Faker_Util.getSoluong(this.min, this.max);
+    }
+
+    public Integer getGiaTri(Integer n){
+        return n;
     }
 
 
